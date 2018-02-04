@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mis Eventos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Codeply">
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet" />
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="/js/scripts.js"></script>
+    <!-- endinject -->
+    
+
+</head>
+
+<body class="bg-faded">
+    <header id="first">
+        <div class="header-content">
+            <div class="inner">
+                <h1>Usuario</h1>
+                <h5 class="wow fadeIn text-normal wow fadeIn">Ingrese sus datos de acceso</h5>
+                <form name="signInForm" action="/auth/signIn" method="post">
+                    eMail: <input name = "eMail" type="email" id="eMail">
+                    Password: <input name = "password" type="password" id="password">
+                    <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Sign in">
+                </form>
+                
+            </div>
+        </div>
+    </header>
+    <nav id="topNav" class="navbar fixed-top navbar-toggleable-sm">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            <span>☰</span>
+        </button>
+            <a class="navbar-brand page-scroll" data-toggle="modal" href="#aboutModal">Registrarse</a>
+            <div class="collapse navbar-collapse" id="collapsingNavbar">
+                <ul class="navbar-nav">
+                    <% for(var i=0; i<nav.length;i++) {%>
+                        <li class="nav-item">
+                        <a class="nav-link page-scroll" href="<%=nav[i].Link%>"><%=nav[i].Text%></a>
+                        </li>
+                    <%}%>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" data-toggle="modal" title="A free Bootstrap theme" href="#aboutModal">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-sm-3">
+                    <h6 class="text-uppercase">Bootstrap 4</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="https://medium.com/@bootply/bootstrap-4-whats-new-visual-guide-c84dd81d8387" target="ext">What's New</a></li>
+                        <li><a href="http://codeply.com/tagged/bootstrap-4" target="ext">Examples</a></li>
+                        <li><a href="http://getbootstrap.com" target="ext">Official</a></li>
+                        <li><a href="http://www.codeply.com/go/p/bootstrap_4.0.alpha" target="ext">Playground</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-sm-3 column">
+                    <h6 class="text-uppercase">About</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-3 column">
+                    <h6 class="text-uppercase">Stay Posted</h6>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#alertModal" type="button">Subscribe for updates</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-3 text-right">
+                    <h6 class="text-uppercase">Follow</h6>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                        <li class="list-inline-item"><a rel="nofollow" href="" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <span class="float-right text-muted small"><a href="http://bootstrap4.guide">Made by Themes.guide</a> ©2015-2017 Company</span>
+        </div>
+    </footer>
+    <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="center-block img-fluid">
+                    <p>
+                        <br>
+                        <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h2 class="text-center">Registrese Aqui</h2>
+                    <p class="text-center">
+                        Los usuarios registrados pueden administrar sus eventos
+                    </p>
+                </div>
+                    <form name="signUpForm" action="/auth/signUp" method="post">
+                        <div class="modal-body text-left">
+                            <label>email:</label><br>
+                            <input name = "email" type="email" id="email"><br>
+                            <label>Nombre: </label><br>
+                            <input name = "userName" id="userName"><br>
+                            <label>Password: </label><br>
+                            <input name = "password" type="password" id="password"><br>
+                        </div>
+                        <div class="modal-body text-center">
+                            <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Registrarse">
+                        </div>
+                    </form>
+                    <br>
+                    <p><%=regStatus%></p>
+                    <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alertModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h2 class="text-center">Nice Job!</h2>
+                    <p class="text-center">You clicked the button, but it doesn't actually go anywhere because this is only a demo.</p>
+                    <p class="text-center"><a href="https://medium.com/@bootply/bootstrap-4-whats-new-visual-guide-c84dd81d8387">Learn More</a></p>
+                    <br>
+                    <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true">OK <i class="ion-android-close"></i></button>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--scripts loaded here-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+
+</body>
+
+</html>

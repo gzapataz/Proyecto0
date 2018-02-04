@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mis Eventos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Codeply">
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css" rel="stylesheet" />
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="/js/scripts.js"></script>
+    <!-- endinject -->
+
+
+</head>
+
+<body class="bg-faded">
+    <nav id="topNav" class="navbar fixed-top navbar-toggleable-sm">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            <span>☰</span>
+        </button>
+            <a class="navbar-brand page-scroll" data-toggle="modal" href="#aboutModal">Adicionar Evento</a>
+            <div class="collapse navbar-collapse" id="collapsingNavbar">
+                <ul class="navbar-nav">
+                    <% for(var i=0; i<nav.length;i++) {%>
+                        <li class="nav-item">
+                        <a class="nav-link page-scroll" href="<%=nav[i].Link%>"><%=nav[i].Text%></a>
+                        </li>
+                    <%}%>
+                </ul>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" data-toggle="modal" title="A free Bootstrap theme" href="#aboutModal">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section id="Eventos">
+        <div class="container wow fadeInUp">
+            <h2>Eventos</h2>
+            <div class="card-group">
+                
+                    <%  var evento;
+                        eventid = 0;
+                        for(var i=0; i<eventos.length;i++) {
+                            evento = eventos[i];
+                            eventid=eventos[i].id%>
+                        <div class="card">
+                            <img class="card-img-top img-fluid" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample13.jpg" alt="Card image cap">
+                            <div class="card-block">
+                                <h4 class="card-title"><%=eventos[i].descripcion%></h4><br>
+                                Fecha Desde: <input name = "fechainicio" id="fechainicio" type="datetime-local" value="<%=eventos[i].fechainicio%>" readonly><br>
+                                Fecha Hasta: <input name = "fechafin" id="fechafin" type="datetime-local" value="<%=eventos[i].fechafin%>" readonly><br>
+                                <p class="card-text">Estado:   <%=eventos[i].estado%></p>
+                                <input type="hidden" name="_method" value=""/>
+                                <a class="nav-link page-scroll" data-toggle="modal" href="#updateModal">Actualizar</a>
+                                <form name="eventDeleteForm" action="/Eventos/evento/<%=eventos[i].id%>" method="post">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Eliminar">
+                                </form>
+                            </div>
+                        </div>
+                    <%}%>    
+            </div>
+        </div>
+    </section>
+    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h2 class="text-center">Nuevo Evento</h2>
+                    <h6 class="text-center">Ingresa todos los datos requeridos</h6>
+                    </div>
+                    <form name="addEventForm" action="/Eventos/evento" method="post">
+                        <div class="modal-body text-left">
+                            <label>Descripción:</label><br>
+                            <input name = "descripcion" id="descripcion"><br>
+                            <label>Fecha de Inicio: </label><br>
+                            <input name = "fechainicio" type="datetime-local" id="fechainicio"><br>
+                            <label>Fecha Final: </label><br>
+                            <input name = "fechafin" type="datetime-local" id="fechafin"><br>
+                        </div>
+                        <div class="modal-body text-center">
+                            <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Adicionar">
+                        </div>
+                    </form>
+                    <br>
+                    <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h2 class="text-center">Modificar Evento</h2>
+                    <h6 class="text-center">Ingresa todos los datos requeridos</h6>
+                    </div>
+
+                    <form name="updateEventForm" action="/Eventos/evento/<%=eventid%>" method="post">
+                        <div class="modal-body text-left">
+                            <%if (evento !== undefined) {%>
+                            <label>Descripción:</label><br>
+                            <input name = "descripcion" id="descripcion" value="<%=evento.descripcion%>"><br>
+                            <label>Fecha de Inicio:</label><br>
+                            <input name = "fechainicio" id="fechainicio" type="datetime-local" value="<%=evento.fechainicio%>"><br>
+                            <label>Fecha Final:</label><br>
+                            <input name = "fechafin" id="fechafin" type="datetime-local" value="<%=evento.fechafin%>"><br>
+                            <label>Estado:</label><br>
+                            <input name = "estado" id="estado" value="<%=evento.estado%>"><br>
+                            <input name = "id" id="id" type="hidden" value="<%=evento.id%>">
+                            <input type="hidden" name="_method" value="put"/>
+                            <%}%>
+                        </div>
+                        <div class="modal-body text-center">
+                            <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Modificar">
+                        </div>
+                    </form>
+                    <br>
+                    <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true"> Cancel </button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alertModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h2 class="text-center">Nice Job!</h2>
+                    <p class="text-center">You clicked the button, but it doesn't actually go anywhere because this is only a demo.</p>
+                    <p class="text-center"><a href="https://medium.com/@bootply/bootstrap-4-whats-new-visual-guide-c84dd81d8387">Learn More</a></p>
+                    <br>
+                    <button class="btn btn-primary btn-lg" data-dismiss="modal" aria-hidden="true">OK <i class="ion-android-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--scripts loaded here-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+
+</body>
+
+</html>
