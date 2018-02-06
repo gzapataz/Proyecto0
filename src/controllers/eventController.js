@@ -10,6 +10,10 @@ var eventController = function(eventService, nav) {
     }
 
     var getIndex = function(req, res) {
+        if (req.user === undefined) {
+            res.redirect('/');
+            return;
+        }
         var userid = req.user.id;
         if (userid) {
             pool.query('select id, descripcion,  to_char(fechainicio, \'YYYY-MM-DDThh:mi\') as fechainicio, \
