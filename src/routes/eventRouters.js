@@ -12,72 +12,17 @@ var loggedUser = 0;
 
 //cRud Query eventos asociados al usuario
 var router = function(nav) {
-    var eventos;
-    try {
-        eventRouter.use(function(req, res, next) {
-            if (!req.user) {
-                res.redirect('/');
-            } else {
-                loggedUser = req.user.id;
-            }
-            next();
-        })
-        eventRouter.route('/')
-            .get(function(req, res) {
-                var userid = parseInt(loggedUser);
-                console.log('user:' + userid);
-                if (userid) {
-                    pool.query('select id, descripcion,  to_char(fechainicio, \'YYYY-MM-DDThh:mi\') as fechainicio, \
-                    to_char(fechafin, \'YYYY-MM-DDThh:mi\') as fechafin, estado from event where userid=$1', [userid],
-                        function(err, recordset) {
-                            res.render('evenlist', {
-                                title: 'Eventos',
-                                nav: nav,
-                                eventos: recordset.rows
-                            });
-                        });
-                }
-            });
-    } catch (e) {
-        console.log('Logged');
-    }
+    var eventController = require('../controllers/eventController')(null, nav);
+
+    eventRouter.use(eventController.middleware);
+    eventRouter.route('/')
+        .get(eventController.getIndex);
     eventRouter.route('/evento')
-        .post(function(req, res) {
-            newEvento = new Evento(null, loggedUser, req.body.descripcion, req.body.fechainicio, req.body.fechafin, 'Pendiente');
-            pool.query('INSERT INTO "event" ' +
-                //'(userid, descripcion, fechainicio, fechafin, estado) VALUES($1, $2, $3, $4)', [1, 'Pruebs', '12/12/12', '12/12/12', 'Pendiente'],
-                '(descripcion, userid, fechainicio, fechafin, estado) VALUES($1, $2, $3, $4, $5)', [newEvento.descripcion, newEvento.userid, newEvento.fechaInicio, newEvento.fechaFin, newEvento.estado],
-                function(err, result) {
-                    console.log('Error ' + err);
-                    res.redirect('/Eventos');
-                })
-            console.log('CREANDO EVENTO ' + JSON.stringify(req.body));
-        })
-        //Query de un evento particular
+        .post(eventController.insertEvent);
+    //Query de un evento particular
 
     eventRouter.route('/evento/:id')
-        .all(function(req, res, next) {
-            console.log('Aqui 1 ' + req.method);
-            var id = parseInt(req.params.id);
-            pool.query('select id, descripcion,  to_char(fechainicio, \'YYYY-MM-DDThh:mi\') as fechainicio, \
-                        to_char(fechafin, \'YYYY-MM-DDThh:mi\') as fechafin, estado from event where id=$1', [id],
-                function(err, recordset) {
-                    if (recordset.rows.length === 0) {
-                        res.status(404).send('Evento No Encontrado');
-                    } else {
-                        req.event = recordset.rows[0];
-                        next();
-                    }
-                });
-
-        })
-        .get(function(req, res) {
-            res.render('evento', {
-                title: 'Evento',
-                nav: nav,
-                evento: req.event
-            });
-        })
+        .get(eventController.getById)
         .post(function(req, res) {
             console.log('Subevento ...' + req.body._method + ' ' + req.params.id);
             if (req.body._method === 'delete') {
