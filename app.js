@@ -14,9 +14,7 @@ var app = express();
 var port = process.env.PORT || 5000;
 var regStatus = '';
 
-var nav = [{ Link: '/Eventos', Text: 'Eventos' },
-    { Link: '/Registrarse', Text: 'Registrarse' }
-];
+var nav = [{ Link: '/Eventos', Text: 'Eventos' }];
 var router = require('./src/routes/eventRouters')(nav);
 var authRouter = require('./src/routes/authRoutes')(nav);
 

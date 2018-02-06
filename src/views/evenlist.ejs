@@ -46,7 +46,7 @@
                 </ul>
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" data-toggle="modal" title="A free Bootstrap theme" href="#aboutModal">About</a>
+                        <a class="nav-link page-scroll" data-toggle="modal" title="A free Bootstrap theme" href="#aboutModal">Adicionar Evento</a>
                     </li>
                 </ul>
             </div>
@@ -70,7 +70,7 @@
                                 Fecha Hasta: <input name = "fechafin" id="fechafin" type="datetime-local" value="<%=eventos[i].fechafin%>" readonly><br>
                                 <p class="card-text">Estado:   <%=eventos[i].estado%></p>
                                 <input type="hidden" name="_method" value=""/>
-                                <a class="nav-link page-scroll" data-toggle="modal" href="#updateModal">Actualizar</a>
+                                <a class="btn btn-primary-outline btn-xl" href="Eventos/evento/<%=eventos[i].id%>">Actualizar</a>
                                 <form name="eventDeleteForm" action="/Eventos/evento/<%=eventos[i].id%>" method="post">
                                     <input type="hidden" name="_method" value="delete"/>
                                     <input class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp m-t-3" type = "submit" value="Eliminar">
@@ -121,12 +121,10 @@
                             <%if (evento !== undefined) {%>
                             <label>Descripción:</label><br>
                             <input name = "descripcion" id="descripcion" value="<%=evento.descripcion%>"><br>
-                            <label>Fecha de Inicio:</label><br>
+                            <label>Fecha de Inicio: <%=evento.fechainicio%></label><br>
                             <input name = "fechainicio" id="fechainicio" type="datetime-local" value="<%=evento.fechainicio%>"><br>
-                            <label>Fecha Final:</label><br>
+                            <label>Fecha Final: <%=evento.fechafin%></label><br>
                             <input name = "fechafin" id="fechafin" type="datetime-local" value="<%=evento.fechafin%>"><br>
-                            <label>Estado:</label><br>
-                            <input name = "estado" id="estado" value="<%=evento.estado%>"><br>
                             <input name = "id" id="id" type="hidden" value="<%=evento.id%>">
                             <input type="hidden" name="_method" value="put"/>
                             <%}%>

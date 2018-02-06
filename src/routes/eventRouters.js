@@ -57,9 +57,8 @@ var router = function(nav) {
 
     eventRouter.route('/evento/:id')
         .all(function(req, res, next) {
-            console.log('Aqui 1' + req.method);
+            console.log('Aqui 1 ' + req.method);
             var id = parseInt(req.params.id);
-            "2017-06-01T08:30"
             pool.query('select id, descripcion,  to_char(fechainicio, \'YYYY-MM-DDThh:mi\') as fechainicio, \
                         to_char(fechafin, \'YYYY-MM-DDThh:mi\') as fechafin, estado from event where id=$1', [id],
                 function(err, recordset) {
@@ -87,7 +86,8 @@ var router = function(nav) {
                         res.redirect('/Eventos');
                     })
             } else {
-                if (req.body._method === 'put') {
+                console.log('Entro al else' + req.body._method + '/');
+                if (req.body._method == 'put') {
                     console.log('Actualizando' + req.params.id);
                     console.log('Actualizando' + JSON.stringify(req.body));
 
