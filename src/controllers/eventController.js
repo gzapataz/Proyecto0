@@ -17,7 +17,7 @@ var eventController = function(eventService, nav) {
         var userid = req.user.id;
         if (userid) {
             pool.query('select id, descripcion,  to_char(fechainicio, \'YYYY-MM-DDThh:mi\') as fechainicio, \
-            to_char(fechafin, \'YYYY-MM-DDThh:mi\') as fechafin, estado from event where userid=$1 order by id', [userid],
+            to_char(fechafin, \'YYYY-MM-DDThh:mi\') as fechafin, estado from event where userid=$1 order by id desc', [userid],
                 function(err, recordset) {
                     res.render('evenlist', {
                         title: 'Eventos',
